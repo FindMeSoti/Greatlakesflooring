@@ -1,0 +1,9 @@
+{
+  "name": "great-lakes-flooring-pros",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/generate-pages.js",
+    "start": "python -m http.server 3000"
+  }
+}
