@@ -1329,6 +1329,28 @@ function writePage(page) {
   fs.writeFileSync(outputPath, renderPage(page));
 }
 
+function absoluteUrlForPage(page) {
+  return page.slug === '/' ? `${siteConfig.url}/` : `${siteConfig.url}/${page.slug}/`;
+}
+
+function renderSitemap(pages) {
+  const lastModified = new Date().toISOString();
+  const urls = pages
+    .map((page) => `  <url>\n    <loc>${escapeHtml(absoluteUrlForPage(page))}</loc>\n    <lastmod>${lastModified}</lastmod>\n  </url>`)
+    .join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+}
+
+function renderRobots() {
+  return `User-agent: *\nAllow: /\n\nSitemap: ${siteConfig.url}/sitemap.xml\n`;
+}
+
+function writeSiteMetadata(pages) {
+  fs.writeFileSync(path.join(root, 'sitemap.xml'), renderSitemap(pages));
+  fs.writeFileSync(path.join(root, 'robots.txt'), renderRobots());
+}
+
 function copyStaticFiles() {
   const assetsDir = path.join(root, 'assets');
   const scriptsDir = path.join(root, 'scripts');
@@ -1344,4 +1366,5 @@ function copyStaticFiles() {
 
 copyStaticFiles();
 pageDefinitions.forEach(writePage);
+writeSiteMetadata(pageDefinitions);
 console.log(`Generated ${pageDefinitions.length} pages.`);
