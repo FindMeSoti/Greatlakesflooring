@@ -5,8 +5,8 @@ const root = path.join(__dirname, '..');
 
 const siteConfig = {
   company: 'Great Lakes Flooring Pros',
-  phone: '(216) 555-0198',
-  email: 'info@greatlakesflooringpros.com',
+  phone: '(216) 366-4231',
+  email: 'sales@greatlakesflooringpros.com',
   address: 'Cleveland, OH',
   serviceArea: 'Cleveland and Northeast Ohio',
   url: 'https://greatlakesflooringpros.com'
@@ -682,7 +682,7 @@ const overviewPages = [
     h1: 'Contact Great Lakes Flooring Pros',
     intro: 'Call or complete the form to request a free flooring estimate, consultation, or project guidance in Cleveland and Northeast Ohio.',
     type: 'about',
-    reasons: ['Call us directly at (216) 555-0198', 'Email us at info@greatlakesflooringpros.com', 'Serving homeowners and businesses throughout Northeast Ohio'],
+    reasons: ['Call us directly at (216) 366-4231', 'Email us at sales@greatlakesflooringpros.com', 'Serving homeowners and businesses throughout Northeast Ohio'],
     faqs: [
       { q: 'How quickly will I hear back?', a: 'We aim to follow up promptly on calls and estimate requests.' },
       { q: 'Do you serve my city?', a: 'Please contact us with your city and project type so we can confirm service availability.' }
@@ -782,7 +782,7 @@ function heroMarkup(page) {
             </div>
           </div>
           <div class="hero-card">
-            <img src="/assets/flooring-hero.svg" alt="Flooring installation illustration" />
+            <img src="/assets/hero-image.png" alt="Flooring installation illustration" />
           </div>
         </div>
       </div>
@@ -1196,7 +1196,11 @@ function contactMarkup(page) {
           </ul>
         </div>
         <div class="contact-card">
-          <form action="/contact/" method="post">
+          <form action="https://formsubmit.co/${siteConfig.email}" method="post">
+            <input type="hidden" name="_subject" value="GLFP Lead | ${escapeHtml(page.h1 || page.title || 'Estimate Request')}" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true" />
             <label>Name<input name="name" type="text" required /></label>
             <label>Phone<input name="phone" type="tel" required /></label>
             <label>Email<input name="email" type="email" required /></label>
@@ -1334,7 +1338,7 @@ function copyStaticFiles() {
   fs.mkdirSync(targetScripts, { recursive: true });
   fs.copyFileSync(path.join(root, 'styles.css'), path.join(root, 'styles.css'));
   fs.copyFileSync(path.join(root, 'scripts', 'main.js'), path.join(root, 'scripts', 'main.js'));
-  fs.copyFileSync(path.join(root, 'assets', 'flooring-hero.svg'), path.join(root, 'assets', 'flooring-hero.svg'));
+  fs.copyFileSync(path.join(root, 'assets', 'hero-image.png'), path.join(root, 'assets', 'hero-image.png'));
   fs.copyFileSync(path.join(root, 'assets', 'room-preview.svg'), path.join(root, 'assets', 'room-preview.svg'));
 }
 
